@@ -113,9 +113,12 @@ const GameProvider: React.FC<GameProviderProps> = ({ children }) => {
       setExperience(newExperience);
 
       if (newLevel > level) {
-        setTimer(50); // Reset timer when level increases
+        setTimer(50);
       } else {
-        setTimer((prevTimer) => prevTimer + length);
+        setTimer((prevTimer) => {
+          if (prevTimer + length > 50) return 50;
+          return prevTimer + length;
+        });
       }
 
       shiftBlocksDown();
