@@ -17,7 +17,6 @@ const Leaderboard: React.FC = () => {
     fetch("/api/scores")
       .then((response) => response.json())
       .then((data) => {
-        // Sort scores in descending order
         const sortedScores = data.sort(
           (a: Score, b: Score) => b.score - a.score
         );

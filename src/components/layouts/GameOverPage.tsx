@@ -8,7 +8,6 @@ const GameOverPage: React.FC<{ score: number }> = ({ score }) => {
 
   useEffect(() => {
     if (publicKey) {
-      // Post the score when the component mounts
       fetch("/api/scores", {
         method: "POST",
         headers: {

@@ -31,7 +31,6 @@ body {
     text-wrap: balance;
   }
 }
-/* Add this to your global CSS or a specific CSS module */
 .fade-out {
   animation: fadeOut 0.5s forwards;
 }
@@ -42,5 +41,18 @@ body {
   }
   to {
     opacity: 0;
+  }
+}
+
+.fade-in {
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
   }
 }

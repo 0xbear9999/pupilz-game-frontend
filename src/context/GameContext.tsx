@@ -17,6 +17,7 @@ interface GameContextProps {
   level: number;
   experience: number;
   destroyingTiles: number[];
+  fadingInTiles: number[];
   add: (index: number, type: number) => void;
   clear: () => void;
   shiftBlocksDown: () => void;
@@ -46,6 +47,7 @@ const GameProvider: React.FC<GameProviderProps> = ({ children }) => {
   const [level, setLevel] = useState<number>(1);
   const [experience, setExperience] = useState<number>(0);
   const [destroyingTiles, setDestroyingTiles] = useState<number[]>([]);
+  const [fadingInTiles, setFadingInTiles] = useState<number[]>([]);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
   const gameIntervalRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -143,6 +145,7 @@ const GameProvider: React.FC<GameProviderProps> = ({ children }) => {
 
   const shiftBlocksDown = () => {
     const newGrid = [...grid];
+    const newFadingInTiles = [];
 
     for (let col = 0; col < cols; col++) {
       let emptySpots = 0;
@@ -158,11 +161,18 @@ const GameProvider: React.FC<GameProviderProps> = ({ children }) => {
       }
 
       for (let row = 0; row < emptySpots; row++) {
-        newGrid[row * cols + col] = Math.floor(Math.random() * 5) + 1;
+        const newIndex = row * cols + col;
+        newGrid[newIndex] = Math.floor(Math.random() * 5) + 1;
+        newFadingInTiles.push(newIndex);
       }
     }
 
     setGrid(newGrid);
+    setFadingInTiles(newFadingInTiles);
+
+    setTimeout(() => {
+      setFadingInTiles([]);
+    }, 500);
   };
 
   useEffect(() => {
@@ -202,6 +212,7 @@ const GameProvider: React.FC<GameProviderProps> = ({ children }) => {
         level,
         experience,
         destroyingTiles,
+        fadingInTiles,
         add,
         clear,
         shiftBlocksDown,

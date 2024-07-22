@@ -15,7 +15,6 @@ import {
 import { clusterApiUrl } from "@solana/web3.js";
 import { ReactNode, useMemo } from "react";
 
-// Import wallet adapter CSS
 import "@solana/wallet-adapter-react-ui/styles.css";
 
 export function WalletProviders({ children }: { children: ReactNode }) {
@@ -28,7 +27,6 @@ export function WalletProviders({ children }: { children: ReactNode }) {
       new TorusWalletAdapter(),
       new LedgerWalletAdapter(),
       new SolflareWalletAdapter(),
-      // Add other wallet adapters here
     ],
     [network]
   );
