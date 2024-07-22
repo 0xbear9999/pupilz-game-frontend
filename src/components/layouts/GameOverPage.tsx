@@ -1,8 +1,26 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { useWallet } from "@solana/wallet-adapter-react";
 
 const GameOverPage: React.FC<{ score: number }> = ({ score }) => {
+  const { publicKey } = useWallet();
+
+  useEffect(() => {
+    if (publicKey) {
+      // Post the score when the component mounts
+      fetch("/api/scores", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ score, wallet: publicKey.toBase58() }),
+      })
+        .then((response) => response.json())
+        .then((data) => console.log("Score added:", data))
+        .catch((error) => console.error("Error adding score:", error));
+    }
+  }, [publicKey, score]);
   const handlePlayClick = () => {
     window.location.reload();
   };

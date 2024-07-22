@@ -1,10 +1,31 @@
-import React from "react";
+"use client";
+
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
-import Link from "next/link";
 import SoundButton from "@/components/buttons/SoundButton";
 import CloseButton from "../buttons/CloseButton";
 
+interface Score {
+  wallet: string;
+  score: number;
+}
+
 const Leaderboard: React.FC = () => {
+  const [scores, setScores] = useState<Score[]>([]);
+
+  useEffect(() => {
+    fetch("/api/scores")
+      .then((response) => response.json())
+      .then((data) => {
+        // Sort scores in descending order
+        const sortedScores = data.sort(
+          (a: Score, b: Score) => b.score - a.score
+        );
+        setScores(sortedScores);
+      })
+      .catch((error) => console.error("Error fetching scores:", error));
+  }, []);
+
   return (
     <div className="h-[400px] lg:h-[600px] w-full lg:w-[1000px] rounded-lg border-2 border-white shadow-xl relative bg-[url('/Pupilz/lead-bg.png')] bg-center bg-cover backdrop-blur-md">
       <div className="container mx-auto">
@@ -24,7 +45,7 @@ const Leaderboard: React.FC = () => {
             height={200}
           />
         </div>
-        <div className="rounded-lg ml-0 lg:ml-[220px]  mt-10 justify-center bg-black/70 w-full lg:w-[600px] h-[450px] mx-auto">
+        <div className="rounded-lg ml-0 lg:ml-[220px] mt-10 justify-center bg-black/70 w-full lg:w-[600px] h-[450px] mx-auto overflow-y-auto">
           <table className="w-full table-auto mt-6">
             <thead>
               <tr>
@@ -35,33 +56,31 @@ const Leaderboard: React.FC = () => {
                   Wallet
                 </th>
                 <th className="text-[#D25B0D] text-right pt-4 pr-6 uppercase text-2xl font-extrabold">
-                  Profit
+                  Score
                 </th>
               </tr>
             </thead>
             <tbody>
-              {/* <tr className="hover:bg-purple-700">
-                <td className="text-center text-[#FBC84C] font-extrabold text-xl py-2">
-                  1.
-                </td>
-                <td className="text-left text-[#FBC84C] font-extrabold text-xl">
-                  41if...J5yBB
-                </td>
-                <td className="text-right pr-6 text-[#FBC84C] font-extrabold text-xl">
-                  1200
-                </td>
-              </tr>
-              <tr className="hover:bg-purple-700 bg-[#5524d8]">
-                <td className="text-center text-[#FBC84C] font-extrabold text-xl py-2">
-                  2.
-                </td>
-                <td className="text-left text-[#FBC84C] font-extrabold text-xl">
-                  RRB...yzXe
-                </td>
-                <td className="text-right pr-6 text-[#FBC84C] font-extrabold text-xl">
-                  200
-                </td>
-              </tr> */}
+              {scores.map((score, index) => (
+                <tr
+                  key={score.wallet}
+                  className={
+                    index % 2 === 0
+                      ? "hover:bg-purple-700"
+                      : "hover:bg-purple-700 bg-[#5524d8]"
+                  }
+                >
+                  <td className="text-center text-[#FBC84C] font-extrabold text-xl py-2">
+                    {index + 1}.
+                  </td>
+                  <td className="text-left text-[#FBC84C] font-extrabold text-xl">
+                    {score.wallet.slice(0, 4)}...{score.wallet.slice(-4)}
+                  </td>
+                  <td className="text-right pr-6 text-[#FBC84C] font-extrabold text-xl">
+                    {score.score}
+                  </td>
+                </tr>
+              ))}
             </tbody>
           </table>
         </div>
