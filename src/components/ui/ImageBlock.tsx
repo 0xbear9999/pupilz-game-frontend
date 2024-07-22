@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import Image from "next/image";
 import { GameContext } from "@/context/GameContext";
 
@@ -9,10 +9,11 @@ interface ImageBlockProps {
 }
 
 const ImageBlock: React.FC<ImageBlockProps> = ({ id, type }) => {
-  const { selected, add } = useContext(GameContext)!;
+  const { selected, add, destroyingTiles } = useContext(GameContext)!;
   const [isHovered, setIsHovered] = useState(false);
 
   const isActive = selected.includes(id);
+  const isDestroying = destroyingTiles.includes(id);
   const src =
     isActive || isHovered
       ? `/Pupilz/pieces/piece-${type}-active.png`
@@ -31,7 +32,7 @@ const ImageBlock: React.FC<ImageBlockProps> = ({ id, type }) => {
     <Image
       src={src}
       alt={`Piece ${type}`}
-      className="absolute"
+      className={`absolute ${isDestroying ? "fade-out" : ""}`}
       width={size}
       height={size}
       style={{

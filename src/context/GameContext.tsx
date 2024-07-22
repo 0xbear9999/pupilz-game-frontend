@@ -16,6 +16,7 @@ interface GameContextProps {
   score: number;
   level: number;
   experience: number;
+  destroyingTiles: number[];
   add: (index: number, type: number) => void;
   clear: () => void;
   shiftBlocksDown: () => void;
@@ -44,6 +45,7 @@ const GameProvider: React.FC<GameProviderProps> = ({ children }) => {
   const [score, setScore] = useState<number>(0);
   const [level, setLevel] = useState<number>(1);
   const [experience, setExperience] = useState<number>(0);
+  const [destroyingTiles, setDestroyingTiles] = useState<number[]>([]);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
   const gameIntervalRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -102,32 +104,41 @@ const GameProvider: React.FC<GameProviderProps> = ({ children }) => {
 
   const clear = () => {
     if (selectedRef.current.length >= 2) {
-      const length = selectedRef.current.length;
-      const newScore = score + length * 10;
-      setScore(newScore);
+      setDestroyingTiles([...selectedRef.current]);
 
-      const newLevel = Math.floor(newScore / 600) + 1;
-      const newExperience = newScore % 600;
+      setTimeout(() => {
+        const length = selectedRef.current.length;
+        const newScore = score + length * 10;
+        setScore(newScore);
 
-      setLevel(newLevel);
-      setExperience(newExperience);
+        const newLevel = Math.floor(newScore / 600) + 1;
+        const newExperience = newScore % 600;
 
-      if (newLevel > level) {
-        setTimer(50);
-      } else {
-        setTimer((prevTimer) => {
-          if (prevTimer + length > 50) return 50;
-          return prevTimer + length;
-        });
-      }
+        setLevel(newLevel);
+        setExperience(newExperience);
 
-      shiftBlocksDown();
+        if (newLevel > level) {
+          setTimer(50);
+        } else {
+          setTimer((prevTimer) => {
+            if (prevTimer + length > 50) return 50;
+            return prevTimer + length;
+          });
+        }
+
+        shiftBlocksDown();
+        setDestroyingTiles([]);
+        setSelected([]);
+        setType(0);
+        selectedRef.current = [];
+        typeRef.current = 0;
+      }, 500);
+    } else {
+      setSelected([]);
+      setType(0);
+      selectedRef.current = [];
+      typeRef.current = 0;
     }
-
-    setSelected([]);
-    setType(0);
-    selectedRef.current = [];
-    typeRef.current = 0;
   };
 
   const shiftBlocksDown = () => {
@@ -190,6 +201,7 @@ const GameProvider: React.FC<GameProviderProps> = ({ children }) => {
         score,
         level,
         experience,
+        destroyingTiles,
         add,
         clear,
         shiftBlocksDown,
