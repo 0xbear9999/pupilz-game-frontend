@@ -113,8 +113,8 @@ const GameProvider: React.FC<GameProviderProps> = ({ children }) => {
         const newScore = score + length * 10;
         setScore(newScore);
 
-        const newLevel = Math.floor(newScore / 600) + 1;
-        const newExperience = newScore % 600;
+        const newLevel = Math.floor(newScore / 500) + 1;
+        const newExperience = newScore % 500;
 
         setLevel(newLevel);
         setExperience(newExperience);

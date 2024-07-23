@@ -20,11 +20,6 @@ const ImageBlock: React.FC<ImageBlockProps> = ({ id, type }) => {
       ? `/Pupilz/pieces/piece-${type}-active.png`
       : `/Pupilz/pieces/piece-${type}.png`;
 
-  const side = 10.75;
-  const size = 64.5;
-  const xPos = (id % 9) * (size + side * 2) + side;
-  const yPos = Math.floor(id / 9) * (size + side * 2) + side;
-
   const handleClick = () => {
     add(id, type);
   };
@@ -36,11 +31,8 @@ const ImageBlock: React.FC<ImageBlockProps> = ({ id, type }) => {
       className={`absolute ${isDestroying ? "fade-out" : ""} ${
         isFadingIn ? "fade-in" : ""
       }`}
-      width={size}
-      height={size}
-      style={{
-        transform: `translate3d(${xPos}px, ${yPos}px, 0) scale(1)`,
-      }}
+      layout="fill"
+      objectFit="cover"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       onClick={handleClick}

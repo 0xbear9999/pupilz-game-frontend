@@ -56,3 +56,189 @@ body {
     opacity: 1;
   }
 }
+
+.gameLayout {
+  width: 500px;
+  height: 300px;
+  font-size: 15px;
+  border: 2px solid white;
+  border-radius: 10px;
+  background-image: url("/Pupilz/Backgroundsheet0.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+@media (min-width: 1024px) {
+  .gameLayout {
+    width: 1000px;
+    height: 600px;
+    font-size: 24px;
+  }
+  .leaderboard {
+    width: 1000px;
+    height: 600px;
+  }
+  .gameoverpage {
+    width: 1000px;
+    height: 600px;
+  }
+  .gameoverpng {
+    height: 595px !important;
+  }
+}
+
+.gameLayout .top {
+  height: 15%;
+  width: auto;
+  position: relative;
+}
+
+.gameLayout .top .scoreBoard {
+  position: absolute;
+  top: 10%;
+  left: 10%;
+  height: 80%;
+  width: 20%;
+  background-image: url("/Pupilz/Scoreboxpage2.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: orange;
+}
+
+.gameLayout .top .menu {
+  position: absolute;
+  top: 15%;
+  right: 5%;
+  height: 70%;
+  width: 7.5%;
+}
+
+.gameLayout .medium {
+  height: 75%;
+  width: auto;
+  display: flex;
+}
+
+.gameLayout .medium .timeBar {
+  position: relative;
+  height: auto;
+  width: 17.5%;
+}
+
+.gameLayout .medium .timeBar .box {
+  position: absolute;
+  height: 120%;
+  width: 60%;
+  top: -20%;
+  left: 20%;
+  background-image: url("/Pupilz/Timebar-sheet0.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.gameLayout .medium .timeBar .liquid {
+  position: absolute;
+  height: 83%;
+  width: 35%;
+  bottom: 14%;
+  left: 32%;
+  background-image: url(/Pupilz/timeline.png);
+  background-size: auto;
+  background-repeat: repeat;
+  background-position: center;
+  box-sizing: border-box;
+  transition: height 0.5s ease-in-out;
+}
+
+.gameLayout .medium .mainGrid {
+  height: auto;
+  width: 82.5%;
+  position: relative;
+}
+
+.gameLayout .medium .mainGrid .progressBar {
+  position: absolute;
+  height: 20%;
+  width: 70%;
+  top: -19%;
+  left: 15%;
+  background-image: url("/Pupilz/progressb.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: 0% -20%;
+}
+
+.gameLayout .medium .mainGrid .progressLine {
+  position: absolute;
+  height: 5.5%;
+  width: 49%;
+  top: -10.5%;
+  left: 28%;
+  background-image: url(/Pupilz/progressbline.png);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: 0% -20%;
+  transition: width 0.5s ease-in-out;
+}
+
+.gameLayout .medium .mainGrid .progressBar .level {
+  position: absolute;
+  top: 55%;
+  right: 5.2%;
+  transform: translate(-50%, -50%);
+  color: orange;
+}
+
+.gameLayout .medium .mainGrid .box {
+  position: absolute;
+  left: 1%;
+  top: 1%;
+  height: 98%;
+  width: 98%;
+  border: 2px solid white;
+  border-radius: 10px;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-content: space-between;
+}
+
+.item {
+  flex: 1 1 calc(100% / 9 - 15px);
+  margin: 7.5px;
+  height: calc(100% / 5 - 15px);
+  position: relative;
+}
+.gameLayout .bottom {
+  height: 10%;
+  width: auto;
+  color: white;
+  font-weight: bold;
+}
+
+@media (max-height: 400px) {
+  .hide-on-small-height {
+    display: none;
+  }
+}
+
+.leaderboard {
+  width: 150vh;
+  height: 100vh;
+}
+
+.gameoverpage {
+  width: 150vh;
+  height: 100vh;
+}
+
+.gameoverpng {
+  height: 99vh;
+}
